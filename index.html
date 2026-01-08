@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WonderBay Theme Park</title>
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #22c1c3 0%, #fdbb2d 100%);
+      --accent-pink: #fb7186;
+      --accent-blue: #3b82f6;
+      --accent-yellow: #facc15;
+      --accent-green: #22c55e;
+      --dark: #0f172a;
+      --muted: #6b7280;
+      --card-bg: #ffffff;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 999px;
+      --shadow-soft: 0 18px 50px rgba(15, 23, 42, 0.18);
+      --shadow-subtle: 0 10px 25px rgba(15, 23, 42, 0.12);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #fef9c3 0, #f9fafb 40%, #e0f2fe 100%);
+      color: var(--dark);
+      line-height: 1.5;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* Layout */
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-logo {
+      width: 36px; height: 36px; border-radius: 999px;
+      background: conic-gradient(from 180deg, #22c1c3, #22c55e, #facc15, #fb7185, #3b82f6, #22c1c3);
+      display: flex; align-items: center; justify-content: center;
+      color: #ffffff; font-weight: 800; box-shadow: 0 10px 25px rgba(59, 130, 246, 0.5);
+      font-size: 18px;
+    }
+    .brand-text { display: flex; flex-direction: column; }
+    .brand-text span:first-child { font-weight: 700; font-size: 18px; letter-spacing: 0.03em; }
+    .brand-text span:last-child {
+      font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.16em;
+    }
+
+    nav ul { list-style: none; display: flex; align-items: center; gap: 20px; font-size: 14px; }
+    nav a { position: relative; padding: 6px 0; color: var(--dark); font-weight: 500; }
+    nav a::after {
+      content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px; border-radius: 999px;
+      background: var(--accent-pink); transition: width 0.2s ease;
+    }
+    nav a:hover::after { width: 100%; }
+
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 16px; border-radius: 999px; background: var(--bg-gradient);
+      color: #ffffff; font-size: 13px; font-weight: 600;
+      box-shadow: 0 12px 30px rgba(248, 113, 113, 0.6);
+    }
+    .nav-cta span { font-size: 16px; }
+
+    main { flex: 1; }
+    section { padding: 56px 16px; }
+    .container { max-width: 1120px; margin: 0 auto; }
+    .section-heading { display: flex; flex-direction: column; gap: 8px; margin-bottom: 32px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; font-size: 11px;
+      text-transform: uppercase; letter-spacing: 0.16em; color: var(--muted);
+    }
+    .eyebrow-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--accent-pink); }
+    .section-heading h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 700; }
+    .section-heading p { max-width: 520px; color: var(--muted); font-size: 14px; }
+
+    /* Hero */
+    .hero { padding-top: 72px; }
+    .hero-inner { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+    .hero-copy h1 { font-size: clamp(32px, 4vw, 44px); line-height: 1.1; margin-bottom: 16px; }
+    .hero-highlight {
+      background: rgba(255, 255, 255, 0.9);
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 11px; margin-bottom: 12px; color: var(--muted);
+    }
+    .hero-highlight-pill {
+      padding: 3px 8px; border-radius: 999px;
+      background: rgba(59, 130, 246, 0.08); color: var(--accent-blue);
+      font-weight: 600; font-size: 11px;
+    }
+    .hero-copy p { max-width: 480px; font-size: 15px; color: var(--muted); margin-bottom: 24px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+    .btn-primary {
+      padding: 12px 22px; border-radius: 999px; background: var(--bg-gradient);
+      color: #ffffff; font-weight: 600; font-size: 14px; border: none; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px; box-shadow: var(--shadow-soft);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 24px 60px rgba(248, 113, 113, 0.6); }
+    .btn-secondary {
+      padding: 11px 20px; border-radius: 999px; border: 1px dashed rgba(148, 163, 184, 0.7);
+      background: rgba(255, 255, 255, 0.85); color: var(--dark); font-weight: 500; font-size: 14px;
+      display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+    }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; color: var(--muted); }
+    .hero-meta-item { display: flex; align-items: center; gap: 8px; }
+    .hero-meta-badge {
+      width: 10px; height: 10px; border-radius: 999px; background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.35);
+    }
+    .hero-visual { position: relative; min-height: 280px; }
+    .hero-card {
+      position: relative; border-radius: var(--radius-lg);
+      background: radial-gradient(circle at 10% 0, #fce7f3 0, #e0f2fe 40%, #dcfce7 90%);
+      padding: 22px 22px 18px; box-shadow: var(--shadow-soft); overflow: hidden; height: 100%;
+    }
+    .hero-park-illus {
+      position: relative; height: 220px; border-radius: 22px;
+      background: linear-gradient(145deg, #2563eb 0%, #22c1c3 40%, #f97316 100%);
+      overflow: hidden;
+    }
+    .hero-sun {
+      position: absolute; top: 18px; left: 26px; width: 52px; height: 52px; border-radius: 999px;
+      background: radial-gradient(circle, #facc15 0, #f97316 50%, #f97316 60%, rgba(248, 113, 113, 0) 70%);
+    }
+    .hero-cloud {
+      position: absolute; top: 30px; right: 32px; width: 72px; height: 30px; border-radius: 999px;
+      background: rgba(248, 250, 252, 0.9); box-shadow: 24px 8px 0 rgba(248, 250, 252, 0.8);
+    }
+    .hero-coaster-track {
+      position: absolute; bottom: 60px; left: -40px; right: -40px; height: 120px; border-radius: 100% 100% 0 0;
+      border: 5px solid rgba(248, 250, 252, 0.85); border-bottom: none;
+    }
+    .hero-coaster-car {
+      position: absolute; bottom: 120px; left: 30%; width: 64px; height: 32px; border-radius: 18px;
+      background: #fb7185; box-shadow: 0 10px 20px rgba(42, 15, 20, 0.5);
+    }
+    .hero-coaster-car::before, .hero-coaster-car::after {
+      content: ""; position: absolute; bottom: -8px; width: 14px; height: 14px; border-radius: 999px; background: #0f172a;
+    }
+    .hero-coaster-car::before { left: 10px; }
+    .hero-coaster-car::after { right: 10px; }
+    .hero-ferris {
+      position: absolute; bottom: 10px; right: 26px; width: 120px; height: 120px; border-radius: 999px;
+      border: 6px solid rgba(248, 250, 252, 0.9);
+    }
+    .hero-ferris-cabin {
+      position: absolute; width: 22px; height: 18px; border-radius: 10px; background: #22c55e;
+    }
+    .hero-ferris-cabin:nth-child(1) { top: -8px; left: 50%; transform: translateX(-50%); }
+    .hero-ferris-cabin:nth-child(2) { top: 20px; right: -6px; }
+    .hero-ferris-cabin:nth-child(3) { bottom: 20px; right: -6px; }
+    .hero-ferris-cabin:nth-child(4) { bottom: -8px; left: 50%; transform: translateX(-50%); }
+    .hero-ferris-cabin:nth-child(5) { bottom: 20px; left: -6px; }
+    .hero-ferris-cabin:nth-child(6) { top: 20px; left: -6px; }
+    .hero-family { position: absolute; bottom: 0; left: 24px; display: flex; gap: 10px; align-items: flex-end; }
+    .hero-family-member {
+      width: 22px; height: 50px; border-radius: 999px 999px 8px 8px;
+      background: rgba(248, 250, 252, 0.95); position: relative;
+    }
+    .hero-family-member::before {
+      content: ""; position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+      width: 20px; height: 20px; border-radius: 999px; background: #fed7aa;
+    }
+    .hero-family-member:nth-child(2) { height: 58px; background: #a5b4fc; }
+    .hero-caption {
+      margin-top: 18px; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      font-size: 12px; color: var(--muted);
+    }
+    .hero-chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      padding: 5px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.35); font-size: 11px;
+    }
+
+    /* Map section */
+    .map-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 32px; align-items: center; }
+    .map-card {
+      border-radius: var(--radius-lg); background: #f97316; box-shadow: var(--shadow-subtle);
+      overflow: hidden; border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+    .map-inner { padding: 18px 20px 16px; }
+    .map-tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .map-tag {
+      display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
+      border-radius: 999px; font-size: 11px; background: rgba(248, 250, 252, 0.9);
+    }
+    .map-dot { width: 9px; height: 9px; border-radius: 999px; }
+    .map-illus { background: radial-gradient(circle at top left, #eef2ff 0, #e0f2fe 40%, #dcfce7 100%); padding: 18px; }
+    .map-placeholder { position: relative; border-radius: 20px; background: #0f172a; height: 260px; overflow: hidden; }
+    .map-placeholder svg { width: 100%; height: 100%; display: block; }
+    .map-legend {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; font-size: 11px; color: var(--muted);
+    }
+    .map-legend-item {
+      display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px;
+      border-radius: 999px; background: rgba(15, 23, 42, 0.05);
+    }
+
+    /* Tickets section */
+    .cards-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+    .ticket-card {
+      border-radius: var(--radius-md); background: #f97316; box-shadow: var(--shadow-subtle);
+      padding: 22px 20px 20px; border: 1px solid rgba(148, 163, 184, 0.25);
+      display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden;
+    }
+    .ticket-pill {
+      display: inline-flex; align-items: center; gap: 8px; padding: 4px 9px;
+      border-radius: 999px; font-size: 11px; background: rgba(248, 250, 252, 0.9); color: var(--muted);
+    }
+    .ticket-pill span { width: 6px; height: 6px; border-radius: 999px; }
+    .ticket-title { font-size: 18px; font-weight: 700; }
+    .ticket-price { font-size: 24px; font-weight: 700; }
+    .ticket-price span { font-size: 12px; color: var(--muted); margin-left: 2px; }
+    .ticket-features { list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: var(--muted); }
+    .ticket-features li::before { content: "•"; color: var(--accent-blue); margin-right: 6px; }
+    .ticket-cta { margin-top: auto; }
+    .ticket-btn {
+      width: 100%; padding: 10px 0; border-radius: 999px; border: none; font-size: 14px; font-weight: 600;
+      cursor: pointer; background: rgba(59, 130, 246, 0.06); color: var(--accent-blue);
+      transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .ticket-btn:hover { background: rgba(59, 130, 246, 0.12); transform: translateY(-1px); box-shadow: 0 12px 25px rgba(148, 163, 184, 0.35); }
+    .ticket-featured { border-color: rgba(248, 113, 113, 0.7); }
+    .ticket-featured::before {
+      content: "Most Popular"; position: absolute; top: 14px; right: -36px; transform: rotate(35deg);
+      background: var(--accent-pink); color: #ffffff; font-size: 10px; font-weight: 600; padding: 2px 32px;
+    }
+    .ticket-featured .ticket-btn { background: var(--bg-gradient); color: #ffffff; box-shadow: var(--shadow-soft); }
+
+    /* Food section */
+    .food-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 32px; align-items: center; }
+    .food-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .food-card { position: relative; border-radius: 20px; overflow: hidden; background: #ffffff; box-shadow: var(--shadow-subtle); }
+    .food-tag {
+      position: absolute; top: 10px; left: 10px; padding: 4px 10px; border-radius: 999px;
+      background: rgba(15, 23, 42, 0.8); color: #ffffff; font-size: 10px;
+      text-transform: uppercase; letter-spacing: 0.12em;
+    }
+    .food-image-placeholder { height: 130px; background-size: cover; background-position: center; }
+    .food-image-burgers {
+      background-image: linear-gradient(135deg, rgba(248, 250, 252, 0.95), rgba(248, 113, 113, 0.7)),
+        url("https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&w=800");
+    }
+    .food-image-pizza {
+      background-image: linear-gradient(135deg, rgba(248, 250, 252, 0.92), rgba(234, 179, 8, 0.7)),
+        url("https://images.pexels.com/photos/724216/pexels-photo-724216.jpeg?auto=compress&cs=tinysrgb&w=800");
+    }
+    .food-image-icecream {
+      background-image: linear-gradient(135deg, rgba(248, 250, 252, 0.92), rgba(244, 114, 182, 0.7)),
+        url("https://images.pexels.com/photos/13711822/pexels-photo-13711822.jpeg?auto=compress&cs=tinysrgb&w=800");
+    }
+    .food-image-drinks {
+      background-image: linear-gradient(135deg, rgba(248, 250, 252, 0.92), rgba(56, 189, 248, 0.7)),
+        url("https://images.pexels.com/photos/5531523/pexels-photo-5531523.jpeg?auto=compress&cs=tinysrgb&w=800");
+    }
+    .food-body { padding: 10px 12px 12px; font-size: 12px; }
+    .food-body h3 { font-size: 14px; margin-bottom: 4px; }
+    .food-body p { font-size: 12px; color: var(--muted); }
+    .food-copy p { max-width: 480px; color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+    .food-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .food-badge {
+      padding: 4px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.3); font-size: 11px;
+    }
+    .food-note { font-size: 12px; color: var(--muted); }
+
+    footer { padding: 28px 16px 36px; background: #0f172a; color: #9ca3a5; }
+    .footer-inner {
+      max-width: 1120px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 16px;
+      align-items: center; justify-content: space-between; font-size: 12px;
+    }
+    .footer-badges { display: flex; flex-wrap: wrap; gap: 10px; }
+    .footer-pill {
+      padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(148, 163, 184, 0.4); color: #e5e7eb;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .hero-inner { grid-template-columns: minmax(0, 1fr); }
+      .hero-visual { order: -1; }
+      .map-grid, .food-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+    @media (max-width: 780px) {
+      .nav-inner { flex-wrap: wrap; justify-content: space-between; }
+      nav ul { flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
+      .cards-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      header.site-header { position: static; }
+      .nav-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
+      nav ul { justify-content: flex-start; }
+      section { padding: 42px 14px; }
+      .cards-3 { grid-template-columns: minmax(0, 1fr); }
+      .map-placeholder { height: 220px; }
+      .hero-card { padding: 18px 16px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <div class="nav-inner">
+        <a href="#top" class="brand">
+          <div class="brand-logo">W</div>
+          <div class="brand-text">
+            <span>WonderBay Park</span>
+            <span>Thrills for every age</span>
+          </div>
+        </a>
+        <nav aria-label="Primary navigation">
+          <ul>
+            <li><a href="#map">Park Map</a></li>
+            <li><a href="#tickets">Tickets</a></li>
+            <li><a href="#food">Food &amp; Dining</a></li>
+            <li><a href="#tickets" class="nav-cta"><span>🎟</span> Get Tickets</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- Hero -->
+      <section class="hero" aria-labelledby="hero-heading">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <div class="hero-highlight">
+              <span class="hero-highlight-pill">Family Fun • All Day</span>
+              <span>Roller coasters, fireworks &amp; magical parades</span>
+            </div>
+            <h1 id="hero-heading">
+              Discover your happiest day at <span style="color:var(--accent-pink);">WonderBay</span>.
+            </h1>
+            <p>
+              Soar on world‑class coasters, drift through glowing lagoons, and share cotton‑candy sunsets
+              with the people you love. Theme park magic, re‑imagined for every age.
+            </p>
+            <div class="hero-actions">
+              <button class="btn-primary" type="button">🎟 Book Day Pass <span>→</span></button>
+              <button class="btn-secondary" type="button">👨‍👩‍👧 Plan your family visit</button>
+            </div>
+            <div class="hero-meta" aria-label="Highlights">
+              <div class="hero-meta-item">
+                <span class="hero-meta-badge"></span>
+                <span>Open daily • 6 AM – 10 PM</span>
+              </div>
+              <div class="hero-meta-item"><span>✨ 45+ rides &amp; attractions</span></div>
+              <div class="hero-meta-item"><span>🎆 Nightly lagoon parade &amp; fireworks</span></div>
+            </div>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="hero-card">
+              <div class="hero-park-illus">
+                <div class="hero-sun"></div>
+                <div class="hero-cloud"></div>
+                <div class="hero-coaster-track"></div>
+                <div class="hero-coaster-car"></div>
+                <div class="hero-ferris">
+                  <div class="hero-ferris-cabin"></div><div class="hero-ferris-cabin"></div>
+                  <div class="hero-ferris-cabin"></div><div class="hero-ferris-cabin"></div>
+                  <div class="hero-ferris-cabin"></div><div class="hero-ferris-cabin"></div>
+                </div>
+                <div class="hero-family">
+                  <div class="hero-family-member"></div>
+                  <div class="hero-family-member"></div>
+                  <div class="hero-family-member"></div>
+                </div>
+              </div>
+              <div class="hero-caption">
+                <div class="hero-chip-row">
+                  <span class="chip">Top‑rated family park 5 years in a row</span>
+                  <span class="chip">New: Neon Lagoon Night Parade</span>
+                </div>
+                <span style="font-size:11px;">Illustration preview • Roller coasters, ferris wheel &amp; happy families</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Park Roadmap / Map -->
+      <section id="map" aria-labelledby="map-heading">
+        <div class="container">
+          <div class="section-heading">
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>Park roadmap
+            </div>
+            <h2 id="map-heading">Explore every zone in a single glance.</h2>
+            <p>
+              From the roar of Thunder Loop to the giggles in Tiny Tides, our illustrated park map makes
+              it easy to plan your perfect day. Drag, zoom or print it at the gate.
+            </p>
+          </div>
+
+          <div class="map-grid">
+            <div>
+              <div class="map-card" aria-label="Theme park map illustration">
+                <div class="map-inner">
+                  <div class="map-tag-row">
+                    <div class="map-tag"><span class="map-dot" style="background:#fb923c;"></span>Thrill Coasters</div>
+                    <div class="map-tag"><span class="map-dot" style="background:#22c55e;"></span>Kids Lagoon</div>
+                    <div class="map-tag"><span class="map-dot" style="background:#0ea5e9;"></span>Water Kingdom</div>
+                    <div class="map-tag"><span class="map-dot" style="background:#e11d48;"></span>Haunted Harbor</div>
+                  </div>
+                  <p style="font-size:13px;color:var(--muted);">
+                    Top‑down, colorful roadmap featuring roller coasters, ferris wheel, water rides,
+                    kids zone, haunted house, food courts and our nightly parade route.
+                  </p>
+                </div>
+                <div class="map-illus">
+                  <div class="map-placeholder">
+                    <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <linearGradient id="lake" x1="0" y1="0" x2="1" y2="1">
+                          <stop offset="0" stop-color="#38bdf8"/>
+                          <stop offset="1" stop-color="#0ea5e9"/>
+                        </linearGradient>
+                      </defs>
+                      <rect width="400" height="260" fill="#0f172a"/>
+                      <rect x="12" y="12" width="376" height="236" rx="22" fill="#020617"/>
+                      <ellipse cx="270" cy="130" rx="90" ry="56" fill="url(#lake)" opacity="0.85"/>
+                      <path d="M40 220 C 90 190 140 180 210 170 C 270 160 320 150 360 130"
+                        fill="none" stroke="#fecaca" stroke-width="5" stroke-linecap="round" stroke-dasharray="10 8" opacity="0.9"/>
+                      <rect x="32" y="32" width="120" height="70" rx="14" fill="#f97316"/>
+                      <path d="M40 94 C 60 62 76 52 94 52 C 112 52 128 62 144 94"
+                        fill="none" stroke="#fed7aa" stroke-width="4" stroke-linecap="round"/>
+                      <circle cx="210" cy="64" r="32" fill="#1d4ed8"/>
+                      <circle cx="210" cy="64" r="22" fill="#eff6ff" stroke="#60a5fa" stroke-width="3"/>
+                      <circle cx="210" cy="32" r="6" fill="#22c55e"/>
+                      <circle cx="236" cy="44" r="6" fill="#facc15"/>
+                      <circle cx="236" cy="84" r="6" fill="#fb7185"/>
+                      <circle cx="184" cy="44" r="6" fill="#a5b4fc"/>
+                      <circle cx="184" cy="84" r="6" fill="#22c55e"/>
+                      <circle cx="210" cy="96" r="6" fill="#f97316"/>
+                      <rect x="48" y="140" width="110" height="70" rx="16" fill="#22c55e"/>
+                      <circle cx="76" cy="166" r="10" fill="#bbf7d0"/>
+                      <circle cx="104" cy="178" r="10" fill="#bbf7d0"/>
+                      <rect x="168" y="160" width="80" height="60" rx="12" fill="#f87171"/>
+                      <path d="M182 178 L208 150 L234 178 Z" fill="#7f1d1d"/>
+                      <rect x="198" y="188" width="16" height="20" rx="3" fill="#facc15"/>
+                      <rect x="280" y="176" width="84" height="44" rx="14" fill="#eab308"/>
+                      <rect x="284" y="172" width="76" height="10" rx="6" fill="#fef9c3"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="map-legend" aria-label="Map legend">
+                <span class="map-legend-item"><span class="map-dot" style="background:#f97354;"></span>Thunder Loop Coasters</span>
+                <span class="map-legend-item"><span class="map-dot" style="background:#a85576;"></span>Skyline Ferris Plaza</span>
+                <span class="map-legend-item"><span class="map-dot" style="background:#0ea543;"></span>Splash Harbor Water Rides</span>
+                <span class="map-legend-item"><span class="map-dot" style="background:#22c332;"></span>Tiny Tides Kids Zone</span>
+                <span class="map-legend-item"><span class="map-dot" style="background:#e11d42;"></span>Phantom Manor</span>
+              </div>
+            </div>
+            <div>
+              <h3 style="font-size:18px;margin-bottom:10px;">Zones &amp; attractions</h3>
+              <p style="font-size:14px;color:var(--muted);margin-bottom:16px;">
+                Split your day between heart‑pounding drops, gentle family rides and lazy river views.
+                Every zone is color‑coded, clearly signed and stroller‑friendly.
+              </p>
+              <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--muted);margin-bottom:18px;">
+                <li><strong style="color:var(--accent-pink);">Thrill Ridge</strong> – 6 major coasters, drop tower, neon night rides.</li>
+                <li><strong style="color:var(--accent-blue);">Lagoon Lights</strong> – ferris wheel, boat rides, sunset shows.</li>
+                <li><strong style="color:var(--accent-green);">Tiny Tides</strong> – splash pads, mini‑coasters, soft‑play castles.</li>
+                <li><strong style="color: #e11be1;;">Haunted Harbor</strong> – story‑driven haunted house &amp; spooky walk‑through.</li>
+              </ul>
+              <p style="font-size:13px;color:var(--muted);">
+                Need a printed copy? Grab a free fold‑out map at the entrance ticket booths or scan
+                the QR codes placed around the park to open this roadmap on your phone.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tickets -->
+      <section id="tickets" aria-labelledby="tickets-heading">
+        <div class="container">
+          <div class="section-heading">
+            <div class="eyebrow">
+              <span class="eyebrow-dot" style="background:var(--accent-blue);"></span>Tickets &amp; passes
+            </div>
+            <h2 id="tickets-heading">Choose the perfect ticket for your perfect day.</h2>
+            <p>
+              Transparent pricing, no surprise fees. Upgrade to VIP anytime during your visit—
+              just visit a Guest Services booth before 4 PM.
+            </p>
+          </div>
+
+          <div class="cards-3" aria-label="Ticket options">
+            <article class="ticket-card">
+              <div class="ticket-pill"><span style="background:var(--accent-blue);"></span>Adult Day Pass</div>
+              <h3 class="ticket-title">Adult</h3>
+              <p class="ticket-price">$110 <span>per guest</span></p>
+              <ul class="ticket-features">
+                <li>All‑day park admission</li><li>Access to all major rides &amp; shows</li>
+                <li>Complimentary digital photo pass</li><li>Same‑day re‑entry</li>
+              </ul>
+              <div class="ticket-cta"><button class="ticket-btn" type="button">Select Adult Pass</button></div>
+            </article>
+
+            <article class="ticket-card">
+              <div class="ticket-pill"><span style="background:var(--accent-green);"></span>Child Day Pass</div>
+              <h3 class="ticket-title">Child</h3>
+              <p class="ticket-price">$150 <span>ages 5–15</span></p>
+              <ul class="ticket-features">
+                <li>All‑day access to Tiny Tides &amp; family rides</li>
+                <li>Complimentary souvenir badge</li>
+                <li>Kids’ meal discounts at select food courts</li>
+              </ul>
+              <div class="ticket-cta"><button class="ticket-btn" type="button">Select Child Pass</button></div>
+            </article>
+
+            <article class="ticket-card ticket-featured">
+              <div class="ticket-pill"><span style="background:var(--accent-pink);"></span>VIP Experience</div>
+              <h3 class="ticket-title">VIP</h3>
+              <p class="ticket-price">$130 <span>limited availability</span></p>
+              <ul class="ticket-features">
+                <li>Front‑of‑line access on select attractions</li>
+                <li>Reserved parade &amp; fireworks viewing area</li>
+                <li>VIP lounge with snacks &amp; drinks</li>
+                <li>Parking upgrade included</li>
+              </ul>
+              <div class="ticket-cta"><button class="ticket-btn" type="button">Upgrade to VIP</button></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Food & Dining -->
+      <section id="food" aria-labelledby="food-heading">
+        <div class="container">
+          <div class="section-heading">
+            <div class="eyebrow">
+              <span class="eyebrow-dot" style="background:var(--accent-yellow);"></span>Food &amp; dining
+            </div>
+            <h2 id="food-heading">From burgers to sundaes, every craving covered.</h2>
+            <p>
+              Refuel between rides with themed cafés, character‑inspired treats and quick‑service
+              favorites. Vegetarian, vegan and allergy‑friendly options available across the park.
+            </p>
+          </div>
+
+          <div class="food-grid">
+            <div class="food-gallery" aria-label="Food image gallery">
+              <article class="food-card">
+                <div class="food-tag">Burger Bay</div>
+                <div class="food-image-placeholder food-image-burgers"></div>
+                <div class="food-body">
+                  <h3>Stacked burgers &amp; crispy fries</h3>
+                  <p>Griddled classics, plant‑based patties and shareable fry boats.</p>
+                </div>
+              </article>
+              <article class="food-card">
+                <div class="food-tag">Skyline Pizza</div>
+                <div class="food-image-placeholder food-image-pizza"></div>
+                <div class="food-body">
+                  <h3>Fire‑oven pizzas by the slice</h3>
+                  <p>Cheesy favorites with kid‑approved toppings and salads.</p>
+                </div>
+              </article>
+              <article class="food-card">
+                <div class="food-tag">Frost &amp; Fun</div>
+                <div class="food-image-placeholder food-image-icecream"></div>
+                <div class="food-body">
+                  <h3>Swirls, sundaes &amp; floats</h3>
+                  <p>Hand‑scooped ice cream, floats and photogenic sundaes.</p>
+                </div>
+              </article>
+              <article class="food-card">
+                <div class="food-tag">Splash Sips</div>
+                <div class="food-image-placeholder food-image-drinks"></div>
+                <div class="food-body">
+                  <h3>Colorful coolers &amp; mocktails</h3>
+                  <p>Refillable souvenir cups, fresh lemonades and frozen drinks.</p>
+                </div>
+              </article>
+            </div>
+            <div class="food-copy">
+              <p>
+                Every land features at least one quick‑service spot and one shaded seating area. Look for
+                the cutlery icon on the map or follow the scent of fresh waffle cones down Lagoon Lane.
+              </p>
+              <div class="food-badges">
+                <span class="food-badge">🍔 Family meal bundles</span>
+                <span class="food-badge">🍕 Late‑night slices</span>
+                <span class="food-badge">🍦 Character sundaes</span>
+                <span class="food-badge">🥤 Refillable drink stations</span>
+              </div>
+              <p class="food-note">
+                Placeholder photography shown above.
+                Final menus, theming and pricing may vary by season. Check the WonderBay app or
+                in‑park signage for latest information during your visit.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <span>© <span id="year"></span> WonderBay Theme Park. Imaginary brand for design demo.</span>
+        <div class="footer-badges">
+          <span class="footer-pill">🎢 45+ rides</span>
+          <span class="footer-pill">👨‍👩‍👧 Family‑friendly</span>
+          <span class="footer-pill">🎆 Nightly parade</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Keep footer year current
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
